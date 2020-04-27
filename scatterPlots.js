@@ -1,3 +1,5 @@
+var dur = 1000
+
 var getMeanGrade = function(entries)
 {
     return d3.mean(entries,function(entry)
@@ -13,11 +15,28 @@ var drawScatter = function(students,target,
 
     setBanner(xProp.toUpperCase() +" vs "+ yProp.toUpperCase());
     
-    d3.select(target).select(".graph")
+	//JOIN
+	var circles = d3.select(target)
+		.select(".graph")
+		.selectAll("circle")
+		.data(students, function(student,index)
+			 {
+			return student.picture
+		})
+	//ENTER
+	circles.enter()
+		.append("circle")
+	
+	//EXIT
+	circles.exit()
+		.remove()
+	
+	//UPDATE
+d3.select(target)
+	.select(".graph")
     .selectAll("circle")
-    .data(students)
-    .enter()
-    .append("circle")
+    .transition()
+	.duration(dur)
     .attr("cx",function(student)
     {
         return xScale(getMeanGrade(student[xProp]));    
@@ -27,6 +46,7 @@ var drawScatter = function(students,target,
         return yScale(getMeanGrade(student[yProp]));    
     })
     .attr("r",4);
+	
 }
 
 var clearScatter = function(target)
