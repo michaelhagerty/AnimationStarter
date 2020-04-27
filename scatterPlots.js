@@ -15,7 +15,7 @@ var drawScatter = function(students,target,
 
     setBanner(xProp.toUpperCase() +" vs "+ yProp.toUpperCase());
     
-	//JOIN
+	//join
 	var circles = d3.select(target)
 		.select(".graph")
 		.selectAll("circle")
@@ -23,15 +23,15 @@ var drawScatter = function(students,target,
 			 {
 			return student.picture
 		})
-	//ENTER
+	//enter
 	circles.enter()
 		.append("circle")
 	
-	//EXIT
+	//exit
 	circles.exit()
 		.remove()
 	
-	//UPDATE
+	//update
 d3.select(target)
 	.select(".graph")
     .selectAll("circle")
@@ -67,10 +67,12 @@ var createAxes = function(screen,margins,graph,
     var axes = d3.select(target)
         .append("g")
     axes.append("g")
+		.classed("xaxis",true)
         .attr("transform","translate("+margins.left+","
              +(margins.top+graph.height)+")")
         .call(xAxis)
     axes.append("g")
+		.classed("yaxis",true)
         .attr("transform","translate("+margins.left+","
              +(margins.top)+")")
         .call(yAxis)
